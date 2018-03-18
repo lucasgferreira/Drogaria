@@ -8,11 +8,12 @@
 
 ### Tecnologias
   
-> Java JSF  
-> Hibernate
-> MySql
+>  - Java JSF  
+>  - Hibernate
+>  - MySql
 ----------
 ### Tutorial
+
 ```sh
 $ git clone https://github.com/lucasgferreira/Drogaria.git
 ```
