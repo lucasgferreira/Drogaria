@@ -1,0 +1,8 @@
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/CidadeDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/ClienteDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/PessoaDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/UsuarioDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/ProdutoDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/util/HibernateUtilTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/EstadoDAOTest.java
+/home/lucas/eclipse-workspace/Drogaria/src/test/java/br/com/drogaria/dao/FabricanteDAOTest.java

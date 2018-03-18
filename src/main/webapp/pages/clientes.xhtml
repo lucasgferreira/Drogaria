@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/templates/modelo.xhtml">
+
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Clientes - Listagens" styleClass="box-primary">
+
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					widgetVar="clienteTable" paginator="true"
+					paginatorPosition="bottom" value="#{clienteBean.clientes}"
+					var="cliente" resizableColumns="true" stickyHeader="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowHover="true" rows="10" reflow="true">
+
+					<f:facet name="header">
+
+						<p:outputPanel>
+							<p:commandButton actionListener="#{clienteBean.novo}"
+								styleClass="btn btn-primary text-white"
+								icon="fa fa-plus fa-lg text-white"
+								update=":mensagem :formCadastro:painel"
+								oncomplete="PF('dialogo').show()">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+
+							<p:commandButton id="toggler" type="button"
+								icon="fa fa-th-list fa-lg" styleClass="btn" />
+							<p:columnToggler datasource="tabela" trigger="toggler" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Nome" filterBy="#{cliente.pessoa.nome}">
+						<h:outputText value="#{cliente.pessoa.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF" filterBy="#{cliente.pessoa.cpf}">
+						<h:outputText value="#{cliente.pessoa.cpf}" />
+					</p:column>
+
+					<p:column headerText="Data de Cadastro"
+						filterBy="#{cliente.dataCadastro}">
+						<h:outputText value="#{cliente.dataCadastro}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Liberado" filterBy="#{cliente.liberado}"
+						filterMatchMode="equals" priority="3" styleClass="text-center">
+
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('clienteTable').filter()">
+								<f:converter converterId="javax.faces.Boolean" />
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItem itemLabel="Liberado" itemValue="true" />
+								<f:selectItem itemLabel="Bloqueado" itemValue="false" />
+							</p:selectOneButton>
+						</f:facet>
+						<p:selectOneButton value="#{cliente.liberado}" disabled="true">
+							<f:selectItem itemLabel="Liberado" itemValue="true" />
+							<f:selectItem itemLabel="Bloqueado" itemValue="false" />
+						</p:selectOneButton>
+
+					</p:column>
+
+					<p:column headerText="Opções" width="120" styleClass="text-center">
+
+						<div class="row text-center">
+							<p:commandButton update=":mensagem :formListagem:tabela"
+								actionListener="#{clienteBean.excluir}"
+								styleClass="btn btn-danger" icon="fa fa-trash fa-lg">
+								<p:confirm header="Confirmação"
+									message="Deseja excluir o Cliente?" icon="ui-icon-alert" />
+								<f:attribute name="clienteSelecionado" value="#{cliente}" />
+							</p:commandButton>
+
+							<p:commandButton update=":mensagem :formCadastro:painel"
+								oncomplete="PF('dialogo').show();"
+								actionListener="#{clienteBean.editar}"
+								styleClass="btn btn-success" icon="fa fa-pencil fa-lg">
+								<f:attribute name="clienteSelecionado" value="#{cliente}" />
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
+				<p:confirmDialog global="true" showEffect="fade" responsive="true"
+					hideEffect="fade" styleClass="box-warning text-white">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes btn-primary"
+						icon="fa fa-check-circle-o fa-lg" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no btn-danger"
+						icon="fa fa-times-circle-o fa-lg" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Clientes - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" responsive="true">
+			<h:form id="formCadastro">
+				<p:panelGrid id="painel" columns="2" styleClass="ui-fluid">
+
+					<p:outputLabel for="pessoa" value="Pessoa:" />
+					<p:selectOneMenu id="pessoa" filter="true" required="true"
+						requiredMessage="O campo 'Pessoa' é obrigatório"
+						value="#{clienteBean.cliente.pessoa}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma pessoa" />
+						<f:selectItems value="#{pessoaBean.pessoas}" var="pessoa"
+							itemValue="#{pessoa}" itemLabel="#{pessoa.nome} - #{pessoa.cpf}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="calendario" value="Data de Cadastro:" />
+					<p:calendar id="calendario"
+						value="#{clienteBean.cliente.dataCadastro}" required="true"
+						requiredMessage="O campo 'Data de Cadastro' é obrigatório"
+						locale="pt_BR" />
+
+					<p:outputLabel for="liberado" value="Liberado:" />
+
+					<p:selectOneButton id="liberado"
+						value="#{clienteBean.cliente.liberado}" required="true"
+						requiredMessage="O campo 'Liberado' é obrigatório">
+						<f:selectItem itemLabel="Liberado" itemValue="true" />
+						<f:selectItem itemLabel="Bloqueado" itemValue="false" />
+					</p:selectOneButton>
+
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid" style="margin-top: 30px;">
+
+					<p:commandButton value="Salvar"
+						actionListener="#{clienteBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela"
+						styleClass="btn btn-primary btn-block" />
+					<p:commandButton value="Cancelar"
+						styleClass="btn btn-danger btn-block"
+						oncomplete="PF('dialogo').hide()" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

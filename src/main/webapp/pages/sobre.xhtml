@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/templates/modelo.xhtml">
+
+
+	<f:metadata>
+		<f:viewAction action="#{vendaBean.novo}" />
+	</f:metadata>
+
+	<ui:define name="conteudo">
+		<div class="container">
+			<p:panel header="SIGDrogaria" styleClass="box-default">
+
+				<ul class="list-group">
+					<li class="list-group-item">Sistema de gerenciamento de
+						drogaria</li>
+					<li class="list-group-item">Versão 1.0.0</li>
+					<li class="list-group-item">GitHub</li>
+				</ul>
+			</p:panel>
+		</div>
+	</ui:define>
+</ui:composition>

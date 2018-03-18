@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>#{msg.tituloUsuarios}</title>
+	<h:outputScript library="js" name="scripts.js" />
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+
+	<p:growl id="mensagem" />
+
+	<div class="container-fluid md-5" style="margin-top: 20px;">
+
+		<h:form id="formListagem">
+			<p:panel header="#{msg.cabecalhoUsuarios}"
+				styleClass="box-primary card">
+
+
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" paginatorPosition="bottom"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					widgetVar="usuarioTable" value="#{usuarioBean.usuarios}"
+					var="usuario" resizableColumns="true" rows="15">
+
+					<f:facet name="header">
+
+						<p:outputPanel>
+							<p:commandButton actionListener="#{usuarioBean.novo}"
+								styleClass="btn btn-primary text-white"
+								icon="fa fa-plus fa-lg text-white"
+								update=":mensagem :formCadastro:painel"
+								oncomplete="PF('dialogo').show()">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+
+							<p:commandButton id="toggler" type="button"
+								icon="fa fa-th-list fa-lg" styleClass="btn" />
+							<p:columnToggler datasource="tabela" trigger="toggler" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Nome" sortBy="#{usuario.pessoa.nome}"
+						filterBy="#{usuario.pessoa.nome}" width="300">
+						<h:outputText value="#{usuario.pessoa.nome}" />
+					</p:column>
+
+					<p:column headerText="CPF" sortBy="#{usuario.pessoa.cpf}"
+						filterBy="#{usuario.pessoa.cpf}" width="200">
+						<h:outputText value="#{usuario.pessoa.cpf}" />
+					</p:column>
+
+					<p:column headerText="Tipo" filterBy="#{usuario.tipoUsuario}"
+						filterMatchMode="contains" width="150">
+
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('usuarioTable').filter()">
+								<f:selectItem itemLabel="Todos os Usuários" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="Administrador"
+									itemValue="ADMINISTRADOR" />
+								<f:selectItem itemLabel="Gerente" itemValue="GERENTE" />
+								<f:selectItem itemLabel="Balconista" itemValue="BALCONISTA" />
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{usuario.tipoUsuario.toString()}" />
+					</p:column>
+
+					<p:column headerText="Ativo" filterBy="#{usuario.ativoFormatado}"
+						width="180">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('usuarioTable').filter()">
+								<f:selectItem itemLabel="Todos" itemValue="" />
+								<f:selectItem itemLabel="SIM" itemValue="SIM" />
+								<f:selectItem itemLabel="NÃO" itemValue="NÃO" />
+							</p:selectOneButton>
+						</f:facet>
+						<h:outputText value="#{usuario.ativoFormatado}" />
+					</p:column>
+
+					<p:column headerText="Opções" width="125">
+
+						<div class="row text-center">
+							<p:commandButton update=":mensagem :formListagem:tabela"
+								actionListener="#{usuarioBean.excluir}"
+								styleClass="btn btn-danger" icon="fa fa-trash fa-lg">
+								<p:confirm header="Confirmação"
+									message="Deseja excluir o Cliente?" icon="ui-icon-alert" />
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+							</p:commandButton>
+
+							<p:commandButton update=":mensagem :formCadastro:painel"
+								oncomplete="PF('dialogo').show();"
+								actionListener="#{usuarioBean.editar}"
+								styleClass="btn btn-success" icon="fa fa-pencil fa-lg">
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
+				<p:confirmDialog global="true" showEffect="fade" responsive="true"
+					hideEffect="fade" styleClass="box-warning text-white">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes btn-primary"
+						icon="fa fa-check-circle-o fa-lg" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no btn-danger"
+						icon="fa fa-times-circle-o fa-lg" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Usuários - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" responsive="true">
+			<h:form id="formCadastro">
+				<p:panelGrid id="painel" columns="2" styleClass="ui-fluid">
+
+					<p:outputLabel for="pessoa" value="Pessoa:" />
+					<p:selectOneMenu id="pessoa" filter="true"
+						value="#{usuarioBean.usuario.pessoa}" required="true"
+						requiredMessage="O campo 'Pessoa' é obrigatório"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma pessoa" />
+						<f:selectItems value="#{usuarioBean.pessoas}" var="pessoa"
+							itemValue="#{pessoa}" itemLabel="#{pessoa.nome} - #{pessoa.cpf}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" maxlength="8"
+						value="#{usuarioBean.usuario.senha}" required="true"
+						requiredMessage="O campo 'Senha' é obrigatório"
+						validatorMessage="Informe uma senha de 6 a 8 caracteres">
+						<f:validateLength minimum="6" maximum="8" />
+					</p:password>
+
+					<p:outputLabel for="tipo" value="Tipo:" />
+					<p:selectOneRadio id="tipo"
+						value="#{usuarioBean.usuario.tipoUsuario}" required="true"
+						requiredMessage="O campo 'Tipo' ´obrigatório">
+						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+						<f:selectItem itemValue="GERENTE" itemLabel="Gerente" />
+						<f:selectItem itemValue="BALCONISTA" itemLabel="Balconista" />
+					</p:selectOneRadio>
+
+					<p:outputLabel for="ativo" value="Ativo:" />
+					<p:selectBooleanCheckbox id="ativo"
+						value="#{usuarioBean.usuario.ativo}" required="true"
+						requiredMessage="O campo 'Ativo' é obrigatório" />
+
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid" style="margin-top: 30px;">
+
+					<p:commandButton value="#{msg.botaoSalvar}"
+						actionListener="#{usuarioBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela"
+						styleClass="btn btn-primary btn-block" />
+					<p:commandButton value="Cancelar"
+						styleClass="btn btn-danger btn-block"
+						oncomplete="PF('dialogo').hide()" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a52eccd2-d6f2-47e4-83cb-2580940a9db8">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[ZHJvZ2FyaWFfZGIuYEVzdGFkb2AgQVMgLDI3Myw1NSxmYTMxOWRjZi1kZDMxLTQ1YTEtOTY1NC01
+ODYwZDkyMDE5ZDg7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="308"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="680"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Drogaria Data Adapter "/>
+	<queryString language="SQL">
+		<![CDATA[SELECT drogaria_db.`Estado`.nome,
+	drogaria_db.`Estado`.sigla
+FROM drogaria_db.`Estado`
+ORDER BY drogaria_db.`Estado`.nome ASC]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado"/>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigla"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="Estado"/>
+	</field>
+	<title>
+		<band height="80" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="80" y="0" width="400" height="80" uuid="71fd7113-a053-4062-9e50-9ae45faef828"/>
+				<imageExpression><![CDATA["src/main/webapp/resources/images/banner.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="400" height="40" uuid="b38fdf6a-319b-4411-a7bf-27310cc61254"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIOS DE ESTADOS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Transparent" x="80" y="0" width="200" height="30" uuid="22cdf743-d8e0-4e82-bf1d-8dfd3eec137e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf8534e8-8f54-496e-a259-2b05d0509c42"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="280" y="0" width="200" height="30" uuid="cb018deb-31c3-4ac7-9c49-01eccb287a96">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4f49457e-4ca6-413e-ab92-bdd15a44c43d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SIGLA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="200" height="20" uuid="957a6403-97a2-4319-9ae2-9022dd9b66cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bf8534e8-8f54-496e-a259-2b05d0509c42"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5" lineColor="#AAAAAA"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="200" height="20" uuid="9d5affb6-b3b9-4ea5-8964-bcb7d5e64fbb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4f49457e-4ca6-413e-ab92-bdd15a44c43d"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5" lineColor="#AAAAAA"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sigla}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="-20" y="19" width="595" height="31" uuid="6e91c841-283b-4557-8efa-fe426567a2f7"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Endereço Empresa]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

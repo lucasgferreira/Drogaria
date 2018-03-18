@@ -1,0 +1,53 @@
+@CHARSET "UTF-8";
+
+.banner {
+	height: 5em;
+}
+
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+	background-color: #efefef !important;
+}
+
+thead .ui-column-title {
+	font-weight: bold !important;
+	font-size: 12pt;
+}
+
+.table-itemvenda {
+	background-color: #eaeaea;
+}
+
+.table-itemvenda .ui-state-default, ui-icon {
+	color: #2980b9 !important;
+}
+
+.label-grid {
+	color: black !important;
+	font-weight: bold;
+}
+
+.sticky-top {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 1020;
+}
+
+.table-item td {
+	font-size: 14pt !important;
+}
+
+.labelTotal {
+	font-size: 20pt !important;
+	color: red;
+}
+
+.text-white {
+	color: white !important;
+}
+
+.margin-20 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
