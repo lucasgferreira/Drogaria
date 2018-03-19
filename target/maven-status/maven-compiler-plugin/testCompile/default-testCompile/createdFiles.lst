@@ -1,7 +1,0 @@
-br/com/drogaria/dao/ClienteDAOTest.class
-br/com/drogaria/dao/UsuarioDAOTest.class
-br/com/drogaria/dao/CidadeDAOTest.class
-br/com/drogaria/dao/ProdutoDAOTest.class
-br/com/drogaria/util/HibernateUtilTest.class
-br/com/drogaria/dao/PessoaDAOTest.class
-br/com/drogaria/dao/FabricanteDAOTest.class
